@@ -75,3 +75,42 @@ const Layout = [
     ],
   ];
   
+
+
+const createLayout = () => {
+
+const wrapper = document.createElement('div');
+const textarea = document.createElement('textarea');
+const keyboard = document.createElement('div');
+let lang = 'rus';
+let capslock = false;
+
+wrapper.append(textarea);
+wrapper.append(keyboard);
+document.body.append(wrapper);
+
+for (let i = 0; i < Layout.length; i += 1) {
+    const row = document.createElement('div');
+    row.classList.add('row');
+    for (let j = 0; j < Layout[i].length; j +=1) {
+      const key = document.createElement('div');
+      key.classList.add('key');
+      key.classList.add(Layout[i][j][0]);
+      key.insertAdjacentHTML('afterBegin',
+        `<div class='rus'>
+          <span class='caseDown '>${Layout[i][j][1]}</span>
+          <span class='caseUp hidden'>${Layout[i][j][2]}</span>
+        </div>
+        <div class='eng hidden'>
+          <span class='caseDown hidden'>${Layout[i][j][3]}</span>
+          <span class='caseUp hidden'>${Layout[i][j][4]}</span>
+        </div>`);
+      row.appendChild(key);
+      console.log(key)
+    }
+    keyboard.appendChild(row);
+   
+  }
+};
+createLayout()
+
