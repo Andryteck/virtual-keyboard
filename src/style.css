@@ -46,4 +46,32 @@
     user-select: none;
     transition: background .2s;
   }
+  .CapsLock {
+    width: 75px;
+  }
+  
+  .Tab {
+    width: 60px;
+  }
+  
+  .Backspace {
+    width: 106px;
+  }
+  
+  .Enter {
+    width: 117px;
+  }
+  
+  .ShiftLeft {
+    width: 90px;
+  }
+  
+  .ShiftRight {
+    width: 103px;
+  }
+  
+  .ControlLeft,
+  .ControlRight {
+    width: 56px;
+  }
   
