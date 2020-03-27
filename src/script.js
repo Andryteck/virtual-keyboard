@@ -131,11 +131,10 @@ const changeCase = () => {
         langElem[i].querySelectorAll('span')[1].classList.toggle('hidden');
     }
 };
-changeCase()
+changeCase();
 
 const changeLang = () => {
     const prevLang = keyboard.querySelectorAll(`div > .${lang}`);
-    console.log(prevLang)
     for (let i = 0; i < prevLang.length; i += 1) {
       prevLang[i].classList.toggle('hidden');
       prevLang[i].querySelectorAll('span')[0].classList.toggle('hidden');
