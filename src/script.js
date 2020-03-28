@@ -168,6 +168,7 @@ textarea.addEventListener('keydown', (e) => {
     e.preventDefault();
 });
 
+
 document.addEventListener('keydown', throttle((e) => {
     const elem = keyboard.getElementsByClassName(e.code)[0];
     if (e.altKey && e.ctrlKey && (e.keyCode === 18 || e.keyCode === 17)) {
@@ -229,6 +230,23 @@ document.addEventListener('keydown', throttle((e) => {
             break;
     }
 }, 10));
+
+document.addEventListener('keyup', (e) => {
+    const elem = keyboard.getElementsByClassName(e.code)[0];
+    switch (e.code) {
+      case 'ShiftLeft':
+      case 'ShiftRight':
+        e.preventDefault();
+        removeActive(elem);
+        changeCase();
+        break;
+      case 'CapsLock':
+        break;
+      default:
+        removeActive(elem);
+        break;
+    }
+  });
 
 
 
