@@ -77,18 +77,15 @@ const Layout = [
 
 const keyboard = document.createElement('div');
 let lang = 'rus';
+const wrapper = document.createElement('div');
+const textarea = document.createElement('textarea');
+let capslock = false;
+
+wrapper.append(textarea);
+wrapper.append(keyboard);
+document.body.append(wrapper);
 
 const createLayout = () => {
-
-    const wrapper = document.createElement('div');
-    const textarea = document.createElement('textarea');
-    
-   
-    let capslock = false;
-
-    wrapper.append(textarea);
-    wrapper.append(keyboard);
-    document.body.append(wrapper);
 
     for (let i = 0; i < Layout.length; i += 1) {
         const row = document.createElement('div');
@@ -123,6 +120,17 @@ const removeActive = (elem) => {
     elem.classList.remove('active');
 };
 
+function throttle(func, milliseconds) {
+    let lastCall = 0;
+    return function () {
+        let now = Date.now();
+        if (lastCall + milliseconds < now) {
+            lastCall = now;
+            return func.apply(this, arguments);
+        }
+    };
+}
+
 const changeCase = () => {
     const langElem = keyboard.querySelectorAll(`div > .${lang}`);
     console.log(langElem)
@@ -136,22 +144,91 @@ changeCase();
 const changeLang = () => {
     const prevLang = keyboard.querySelectorAll(`div > .${lang}`);
     for (let i = 0; i < prevLang.length; i += 1) {
-      prevLang[i].classList.toggle('hidden');
-      prevLang[i].querySelectorAll('span')[0].classList.toggle('hidden');
+        prevLang[i].classList.toggle('hidden');
+        prevLang[i].querySelectorAll('span')[0].classList.toggle('hidden');
     }
     if (lang === 'rus') {
-      lang = 'eng';
-      localStorage.setItem('lang', lang);
+        lang = 'eng';
+        localStorage.setItem('lang', lang);
     } else {
-      lang = 'rus';
-      localStorage.setItem('lang', lang);
+        lang = 'rus';
+        localStorage.setItem('lang', lang);
     }
     const nextLang = keyboard.querySelectorAll(`div > .${lang}`);
     for (let i = 0; i < nextLang.length; i += 1) {
-      nextLang[i].classList.toggle('hidden');
-      nextLang[i].querySelectorAll('span')[0].classList.toggle('hidden');
+        nextLang[i].classList.toggle('hidden');
+        nextLang[i].querySelectorAll('span')[0].classList.toggle('hidden');
     }
-  };
+};
+if (localStorage.lang === 'eng') {
+    changeLang();
+}
+
+textarea.addEventListener('keydown', (e) => {
+    e.preventDefault();
+});
+
+document.addEventListener('keydown', throttle((e) => {
+    const elem = keyboard.getElementsByClassName(e.code)[0];
+    if (e.altKey && e.ctrlKey && (e.keyCode === 18 || e.keyCode === 17)) {
+        addActive(elem);
+        changeLang();
+        return false;
+    }
+    switch (e.code) {
+        case 'MetaLeft':
+            break;
+        case 'Tab':
+            e.preventDefault();
+            addActive(elem);
+            textarea.value += '    ';
+            break;
+        case 'Enter':
+            e.preventDefault();
+            addActive(elem);
+            textarea.value += '\n';
+            break;
+        case 'CapsLock':
+            if (capslock) {
+                removeActive(elem);
+                capslock = false;
+            } else {
+                addActive(elem);
+                capslock = true;
+            }
+            e.preventDefault();
+            changeCase();
+            break;
+        case 'Backspace':
+            textarea.value = textarea.value.substr(0, textarea.value.length - 1);
+            addActive(elem);
+            break;
+        case 'Delete':
+            e.preventDefault();
+            addActive(elem);
+            break;
+        case 'AltLeft':
+        case 'AltRight':
+            e.preventDefault();
+            addActive(elem);
+            break;
+        case 'ControlLeft':
+        case 'ControlRight':
+            e.preventDefault();
+            addActive(elem);
+            break;
+        case 'ShiftLeft':
+        case 'ShiftRight':
+            e.preventDefault();
+            addActive(elem);
+            changeCase();
+            break;
+        default:
+            addActive(elem);
+            textarea.value += elem.querySelectorAll(':not(.hidden)')[1].textContent;
+            break;
+    }
+}, 10));
 
 
 
