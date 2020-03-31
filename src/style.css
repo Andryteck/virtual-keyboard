@@ -39,6 +39,7 @@
     font-weight: 500;
     line-height: 40px;
     text-align: center;
+    font-family: sans-serif;
     color: #f06c64;
     background: #2D303A;
     border: 1px solid #2d2d2d;
@@ -47,33 +48,51 @@
     user-select: none;
     transition: background .2s;
   }
+  
   .CapsLock {
     width: 75px;
+    padding-top: 5px;
+  }
+  .CapsLock::after {
+      content: '';
+      top: 530px;
+      right: 767px;
+      width: 8px;
+      height: 8px;
+      background: rgba(0,0,0, 0.4);
+      border-radius: 50%;
+      position: relative;
   }
   
   .Tab {
     width: 60px;
+    padding-top: 5px;
   }
   
   .Backspace {
     width: 106px;
+    padding-top: 5px;
   }
   
   .Enter {
     width: 117px;
+    padding-top: 5px;
   }
   
   .ShiftLeft {
     width: 90px;
+    padding-top: 5px;
   }
   
   .ShiftRight {
     width: 103px;
+    padding-top: 5px;
   }
   
   .ControlLeft,
   .ControlRight {
     width: 56px;
+    padding-top: 5px;
   }
   .active {
     background-color: #63ffb4;
@@ -88,9 +107,11 @@
     display: block;
     width: 100%;
     min-height: 40px;
+    padding-top: 5px;
   }
   
   .hidden {
     display: none;
   }
+  
   

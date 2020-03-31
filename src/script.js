@@ -110,7 +110,8 @@ const createLayout = () => {
 
     }
 };
-createLayout()
+createLayout();
+
 
 const addActive = (elem) => {
     elem.classList.add('active');
@@ -133,13 +134,12 @@ function throttle(func, milliseconds) {
 
 const changeCase = () => {
     const langElem = keyboard.querySelectorAll(`div > .${lang}`);
-    console.log(langElem)
     for (let i = 0; i < langElem.length; i += 1) {
         langElem[i].querySelectorAll('span')[0].classList.toggle('hidden');
         langElem[i].querySelectorAll('span')[1].classList.toggle('hidden');
     }
 };
-changeCase();
+
 
 const changeLang = () => {
     const prevLang = keyboard.querySelectorAll(`div > .${lang}`);
@@ -160,6 +160,7 @@ const changeLang = () => {
         nextLang[i].querySelectorAll('span')[0].classList.toggle('hidden');
     }
 };
+changeLang()
 if (localStorage.lang === 'eng') {
     changeLang();
 }
@@ -246,6 +247,96 @@ document.addEventListener('keyup', (e) => {
         removeActive(elem);
         break;
     }
+  });
+
+  keyboard.addEventListener('mousedown', (e) => {
+    if (e.target.tagName === 'SPAN') {
+      const elem = e.target.closest('.key');
+      switch (elem.classList[1]) {
+        case 'Tab':
+          e.preventDefault();
+          addActive(elem);
+          textarea.value += '    ';
+          break;
+        case 'Enter':
+          e.preventDefault();
+          addActive(elem);
+          textarea.value += '\n';
+          break;
+        case 'Backspace':
+          textarea.value = textarea.value.substr(0, textarea.value.length - 1);
+          addActive(elem);
+          break;
+        case 'CapsLock':
+          e.preventDefault();
+          if (capslock) {
+            removeActive(e.target.closest('.key'));
+            capslock = false;
+          } else {
+            addActive(e.target.closest('.key'));
+            capslock = true;
+          }
+          changeCase();
+          break;
+        case 'Delete':
+          e.preventDefault();
+          addActive(elem);
+          break;
+        case 'AltLeft':
+        case 'AltRight':
+          e.preventDefault();
+          addActive(elem);
+          break;
+        case 'ControlLeft':
+        case 'ControlRight':
+          e.preventDefault();
+          addActive(elem);
+          break;
+        case 'ShiftLeft':
+        case 'ShiftRight':
+          e.preventDefault();
+          addActive(elem);
+          changeCase();
+          break;
+        default:
+          addActive(elem);
+          textarea.value += elem.querySelectorAll(':not(.hidden)')[1].textContent;
+          break;
+      }
+    } else {
+      e.preventDefault();
+    }
+  });
+  
+  keyboard.addEventListener('mouseup', (e) => {
+    const elem = e.target.closest('.key');
+    switch (elem.classList[1]) {
+      case 'ShiftLeft':
+      case 'ShiftRight':
+        e.preventDefault();
+        removeActive(elem);
+        changeCase();
+        break;
+      case 'CapsLock':
+        e.preventDefault();
+        if (capslock !== true) {
+          removeActive(e.target.closest('.key'));
+        } else {
+          addActive(e.target.closest('.key'));
+        }
+        break;
+      default:
+        removeActive(elem);
+        break;
+    }
+  });
+
+  keyboard.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+  });
+  
+  keyboard.addEventListener('dblclick', (e) => {
+    e.preventDefault();
   });
 
 
