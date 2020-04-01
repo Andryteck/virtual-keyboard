@@ -87,7 +87,7 @@ document.body.append(wrapper);
 
 const createLayout = () => {
 
-    for (let i = 0; i < Layout.length; i += 1) {
+    for (let i = 0; i < Layout.length; i+= 1) {
         const row = document.createElement('div');
         row.classList.add('row');
         for (let j = 0; j < Layout[i].length; j += 1) {
@@ -141,6 +141,7 @@ const changeCase = () => {
 };
 
 
+
 const changeLang = () => {
     const prevLang = keyboard.querySelectorAll(`div > .${lang}`);
     for (let i = 0; i < prevLang.length; i += 1) {
@@ -160,7 +161,8 @@ const changeLang = () => {
         nextLang[i].querySelectorAll('span')[0].classList.toggle('hidden');
     }
 };
-changeLang()
+
+
 if (localStorage.lang === 'eng') {
     changeLang();
 }
@@ -172,7 +174,7 @@ textarea.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', throttle((e) => {
     const elem = keyboard.getElementsByClassName(e.code)[0];
-    if (e.altKey && e.ctrlKey && (e.keyCode === 18 || e.keyCode === 17)) {
+    if (e.shiftKey && e.altKey && (e.keyCode === 18 || e.keyCode === 16 )) {
         addActive(elem);
         changeLang();
         return false;
@@ -340,5 +342,7 @@ document.addEventListener('keyup', (e) => {
   });
 
 
-
+  
+  
+  
 

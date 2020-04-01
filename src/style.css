@@ -20,6 +20,7 @@
     width: 960px;
     height: 300px;
     margin-bottom: 50px;
+    border: 1px solid black;
   }
   .keyboard {
     width: 715px;
