@@ -1,1 +1,1 @@
-[deploy] (https://Andryteck.github.io/virtual-keyboard/)
+[deploy](https://Andryteck.github.io/virtual-keyboard/)
