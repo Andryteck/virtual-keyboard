@@ -1,1 +1,1 @@
-[deploy](kulik-virtualkeyboard.netlify.com)
+Deploy: (kulik-virtualkeyboard.netlify.com)
